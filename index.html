@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlantic League Analytics Platform API Documentation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        h1, h2, h3, h4 {
+            color: #343a40;
+        }
+        pre {
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        code {
+            background-color: #e9ecef;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+        a {
+            color: #007bff;
+        }
+        .response {
+            background-color: #d4edda;
+            padding: 10px;
+            border-left: 5px solid #28a745;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Atlantic League Analytics Platform API Documentation</h1>
+
+    <h2>Overview</h2>
+    <p>The Atlantic League Analytics Platform provides a robust API to access Trackman data and manage widgets. This API enables authorized users to interact with data and resources securely, facilitating the development and integration of widgets for analytical purposes.</p>
+
+    <h2>Base URL</h2>
+    <pre><code>https://api.atlanticleagueanalytics.com/v1</code></pre>
+
+    <h2>Authentication</h2>
+    <p>All API requests require authentication via AWS Cognito. Users must register and authenticate to receive a JSON Web Token (JWT), which should be included in the Authorization header of each request.</p>
+    <pre><code>Authorization: Bearer &lt;token&gt;</code></pre>
+
+    <h2>API Endpoints</h2>
+
+    <h3>1. User Management</h3>
+    
+    <h4>Register a User</h4>
+    <pre><code>POST /users/register</code></pre>
+    <p>Request Body:</p>
+    <pre><code>{
+  "username": "string",
+  "password": "string",
+  "email": "string",
+  "role": "string" // e.g., "coach", "player", "developer"
+}</code></pre>
+    <p>Response:</p>
+    <div class="response">
+        <p><strong>201 Created:</strong> User registered successfully.</p>
+        <p><strong>400 Bad Request:</strong> Validation error.</p>
+    </div>
+
+    <h4>Login</h4>
+    <pre><code>POST /users/login</code></pre>
+    <p>Request Body:</p>
+    <pre><code>{
+  "username": "string",
+  "password": "string"
+}</code></pre>
+    <p>Response:</p>
+    <div class="response">
+        <p><strong>200 OK:</strong> Returns JWT token.</p>
+        <p><strong>401 Unauthorized:</strong> Invalid credentials.</p>
+    </div>
+
+    <h4>Get User Details</h4>
+    <pre><code>GET /users/me</code></pre>
+    <p>Response:</p>
+    <pre><code>{
+  "userId": "string",
+  "username": "string",
+  "role": "string",
+  "teams": ["string"]
+}</code></pre>
+
+    <h3>2. Team Management</h3>
+
+    <h4>Create Team</h4>
+    <pre><code>POST /teams</code></pre>
+    <p>Request Body:</p>
+    <pre><code>{
+  "teamName": "string",
+  "members": ["userId1", "userId2"]
+}</code></pre>
+    <p>Response:</p>
+    <div class="response">
+        <p><strong>201 Created:</strong> Team created successfully.</p>
+        <p><strong>403 Forbidden:</strong> User not authorized.</p>
+    </div>
+
+    <h4>Invite User to Team</h4>
+    <pre><code>POST /teams/{teamId}/invite</code></pre>
+    <p>Request Body:</p>
+    <pre><code>{
+  "userId": "string"
+}</code></pre>
+    <p>Response:</p>
+    <div class="response">
+        <p><strong>200 OK:</strong> User invited successfully.</p>
+        <p><strong>404 Not Found:</strong> Team not found.</p>
+    </div>
+
+    <h4>Remove User from Team</h4>
+    <pre><code>DELETE /teams/{teamId}/members/{userId}</code></pre>
+    <p>Response:</p>
+    <div class="response">
+        <p><strong>204 No Content:</strong> User removed successfully.</p>
+        <p><strong>403 Forbidden:</strong> User not authorized.</p>
+    </div>
+
+    <h3>3. Widget Management</h3>
+
+    <h4>List Widgets</h4>
+    <pre><code>GET /widgets</code></pre>
+    <p>Response:</p>
+    <pre><code>[
+  {
+    "widgetId": "string",
+    "name": "string",
+    "description": "string",
+    "createdBy": "string"
+  }
+]</code></pre>
+
+    <h4>Search Widgets</h4>
+    <pre><code>GET /widgets/search?query={query}</code></pre>
+    <p>Response:</p>
+    <pre><code>[
+  {
+    "widgetId": "string",
+    "name": "string",
+    "description": "string"
+  }
+]</code></pre>
+
+    <h3>4. Data Access</h3>
+
+    <h4>Get Trackman Data</h4>
+    <pre><code>GET /data/trackman</code></pre>
+    <p>Response:</p>
+    <pre><code>[
+  {
+    "playerId": "string",
+    "stats": {
+      "pitchType": "string",
+      "velocity": "number",
+      "spinRate": "number"
+    }
+  }
+]</code></pre>
+
+    <h3>5. Access Control</h3>
+
+    <h4>Set Access Level for Team</h4>
+    <pre><code>POST /teams/{teamId}/access</code></pre>
+    <p>Request Body:</p>
+    <pre><code>{
+  "accessLevel": "string" // e.g., "public", "private"
+}</code></pre>
+    <p>Response:</p>
+    <div class="response">
+        <p><strong>200 OK:</strong> Access level updated successfully.</p>
+    </div>
+
+    <h2>Error Handling</h2>
+    <p>Common error responses include:</p>
+    <ul>
+        <li><strong>400 Bad Request:</strong> The request was invalid or cannot be otherwise served.</li>
+        <li><strong>401 Unauthorized:</strong> Authentication failed or user does not have permissions.</li>
+        <li><strong>403 Forbidden:</strong> The request was valid, but the server is refusing action.</li>
+        <li><strong>404 Not Found:</strong> The requested resource could not be found.</li>
+        <li><strong>500 Internal Server Error:</strong> An error occurred on the server.</li>
+    </ul>
+
+    <h2>Rate Limiting</h2>
+    <p>To ensure fair use of the API, the following rate limits apply:</p>
+    <p><strong>100 requests per minute per user.</strong></p>
+
+    <h2>Conclusion</h2>
+    <p>This API documentation provides a comprehensive overview of the Atlantic League Analytics Platform's API functionalities. Users are encouraged to review the authentication methods, endpoints, and response structures to effectively integrate with the platform.</p>
+
+    <p>For further inquiries or support, please contact our development team.</p>
+</body>
+</html>
