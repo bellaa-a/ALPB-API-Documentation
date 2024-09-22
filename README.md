@@ -1,5 +1,3 @@
-# ALPB-API-Documentation
-
 # Atlantic League Analytics Platform API Documentation
 
 ## Overview
