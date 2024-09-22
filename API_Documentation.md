@@ -173,6 +173,17 @@ Authorization: Bearer <token>
 
 ---
 
+### Database Structure Notes
+
+* The ER diagram outlines the relationships between key entities such as `PLAYER`, `PITCH`, `GAME`, and `TEAM`.
+* Each `PITCH` involves three players: the pitcher, batter, and catcher. Ensure APIs return details for all involved players when querying pitch data.
+* The `daily_game_number` in the `GAME` entity helps identify doubleheaders. API endpoints should allow filtering by this field.
+* Some fields, such as `pitcher_set` and `tagged_pitch_type`, currently have undefined values. Future updates should focus on clarifying their data types and existence.
+* All unspecified measurement data types in the PITCH diagram are assumed to be `double precision`.
+* Further investigation is needed for fields like `dimensions` in the `BALLPARK` table.
+
+---
+
 ## Error Handling
 
 Common error responses include:

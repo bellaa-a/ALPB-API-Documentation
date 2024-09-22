@@ -34,6 +34,12 @@
             border-left: 5px solid #28a745;
             margin: 10px 0;
         }
+        .notes {
+            background-color: #fff3cd;
+            padding: 10px;
+            border-left: 5px solid #ffc107;
+            margin: 10px 0;
+        }
     </style>
 </head>
 <body>
@@ -194,9 +200,18 @@
     <p>To ensure fair use of the API, the following rate limits apply:</p>
     <p><strong>100 requests per minute per user.</strong></p>
 
+    <h2>Database Structure Notes</h2>
+    <div class="notes">
+        <p>The ER diagram outlines the relationships between key entities such as <code>PLAYER</code>, <code>PITCH</code>, <code>GAME</code>, and <code>TEAM</code>.</p>
+        <p>Each <code>PITCH</code> involves three players: the pitcher, batter, and catcher. Ensure APIs return details for all involved players when querying pitch data.</p>
+        <p>The <code>daily_game_number</code> in the <code>GAME</code> entity helps identify doubleheaders. API endpoints should allow filtering by this field.</p>
+        <p>Some fields, such as <code>pitcher_set</code> and <code>tagged_pitch_type</code>, currently have undefined values. Future updates should focus on clarifying their data types and existence.</p>
+        <p>All unspecified measurement data types in the PITCH diagram are assumed to be <code>double precision</code>.</p>
+        <p>Further investigation is needed for fields like <code>dimensions</code> in the <code>BALLPARK</code> table.</p>
+    </div>
+
     <h2>Conclusion</h2>
     <p>This API documentation provides a comprehensive overview of the Atlantic League Analytics Platform's API functionalities. Users are encouraged to review the authentication methods, endpoints, and response structures to effectively integrate with the platform.</p>
-
     <p>For further inquiries or support, please contact our development team.</p>
 </body>
 </html>
