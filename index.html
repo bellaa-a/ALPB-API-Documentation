@@ -57,8 +57,8 @@
 
     <h2>API Endpoints</h2>
 
+    <!-- User Management -->
     <h3>1. User Management</h3>
-    
     <h4>Register a User</h4>
     <pre><code>POST /users/register</code></pre>
     <p>Request Body:</p>
@@ -97,7 +97,19 @@
   "teams": ["string"]
 }</code></pre>
 
+    <!-- Team Management -->
     <h3>2. Team Management</h3>
+
+    <h4>Retrieve All Teams</h4>
+    <pre><code>GET /teams</code></pre>
+    <p>Response:</p>
+    <pre><code>[
+  {
+    "teamId": "string",
+    "teamName": "string",
+    "members": ["userId1", "userId2"]
+  }
+]</code></pre>
 
     <h4>Create Team</h4>
     <pre><code>POST /teams</code></pre>
@@ -132,60 +144,70 @@
         <p><strong>403 Forbidden:</strong> User not authorized.</p>
     </div>
 
-    <h3>3. Widget Management</h3>
+    <!-- Pitch Management -->
+    <h3>3. Pitch Management</h3>
 
-    <h4>List Widgets</h4>
-    <pre><code>GET /widgets</code></pre>
+    <h4>Get Pitch Data</h4>
+    <pre><code>GET /pitch/{pitchId}</code></pre>
     <p>Response:</p>
-    <pre><code>[
-  {
-    "widgetId": "string",
-    "name": "string",
-    "description": "string",
-    "createdBy": "string"
-  }
-]</code></pre>
-
-    <h4>Search Widgets</h4>
-    <pre><code>GET /widgets/search?query={query}</code></pre>
-    <p>Response:</p>
-    <pre><code>[
-  {
-    "widgetId": "string",
-    "name": "string",
-    "description": "string"
-  }
-]</code></pre>
-
-    <h3>4. Data Access</h3>
-
-    <h4>Get Trackman Data</h4>
-    <pre><code>GET /data/trackman</code></pre>
-    <p>Response:</p>
-    <pre><code>[
-  {
-    "playerId": "string",
-    "stats": {
-      "pitchType": "string",
-      "velocity": "number",
-      "spinRate": "number"
-    }
-  }
-]</code></pre>
-
-    <h3>5. Access Control</h3>
-
-    <h4>Set Access Level for Team</h4>
-    <pre><code>POST /teams/{teamId}/access</code></pre>
-    <p>Request Body:</p>
     <pre><code>{
-  "accessLevel": "string" // e.g., "public", "private"
+  "pitchId": "string",
+  "pitchType": "string",
+  "velocity": "number",
+  "spinRate": "number",
+  "pitcherId": "string",
+  "batterId": "string"
 }</code></pre>
-    <p>Response:</p>
-    <div class="response">
-        <p><strong>200 OK:</strong> Access level updated successfully.</p>
-    </div>
 
+    <!-- Player Management -->
+    <h3>4. Player Management</h3>
+
+    <h4>Get Player Details</h4>
+    <pre><code>GET /players/{playerId}</code></pre>
+    <p>Response:</p>
+    <pre><code>{
+  "playerId": "string",
+  "name": "string",
+  "team": "string",
+  "position": "string",
+  "stats": {
+    "gamesPlayed": "number",
+    "average": "number",
+    "homeRuns": "number"
+  }
+}</code></pre>
+
+    <!-- Ballpark Management -->
+    <h3>5. Ballpark Management</h3>
+
+    <h4>Get Ballpark Details</h4>
+    <pre><code>GET /ballparks/{ballparkId}</code></pre>
+    <p>Response:</p>
+    <pre><code>{
+  "ballparkId": "string",
+  "name": "string",
+  "location": "string",
+  "dimensions": "string"
+}</code></pre>
+
+    <!-- Game Management -->
+    <h3>6. Game Management</h3>
+
+    <h4>Get Game Details</h4>
+    <pre><code>GET /games/{gameId}</code></pre>
+    <p>Response:</p>
+    <pre><code>{
+  "gameId": "string",
+  "date": "string",
+  "teams": ["team1", "team2"],
+  "score": {
+    "team1": "number",
+    "team2": "number"
+  },
+  "venue": "string"
+}</code></pre>
+
+    <!-- Error Handling & Rate Limiting -->
     <h2>Error Handling</h2>
     <p>Common error responses include:</p>
     <ul>
@@ -203,15 +225,13 @@
     <h2>Database Structure Notes</h2>
     <div class="notes">
         <p>The ER diagram outlines the relationships between key entities such as <code>PLAYER</code>, <code>PITCH</code>, <code>GAME</code>, and <code>TEAM</code>.</p>
-        <p>Each <code>PITCH</code> involves three players: the pitcher, batter, and catcher. Ensure APIs return details for all involved players when querying pitch data.</p>
-        <p>The <code>daily_game_number</code> in the <code>GAME</code> entity helps identify doubleheaders. API endpoints should allow filtering by this field.</p>
-        <p>Some fields, such as <code>pitcher_set</code> and <code>tagged_pitch_type</code>, currently have undefined values. Future updates should focus on clarifying their data types and existence.</p>
-        <p>All unspecified measurement data types in the PITCH diagram are assumed to be <code>double precision</code>.</p>
-        <p>Further investigation is needed for fields like <code>dimensions</code> in the <code>BALLPARK</code> table.</p>
+        <p>Each <code>PITCH</code> record is associated with a specific <code>PLAYER</code> (pitcher) and can also reference a batter. The <code>TEAM</code> entity includes members (players), and games are mapped between two teams.</p>
     </div>
 
     <h2>Conclusion</h2>
-    <p>This API documentation provides a comprehensive overview of the Atlantic League Analytics Platform's API functionalities. Users are encouraged to review the authentication methods, endpoints, and response structures to effectively integrate with the platform.</p>
-    <p>For further inquiries or support, please contact our development team.</p>
+    <p>This API documentation provides a comprehensive overview of the Atlantic League Analytics Platform's 
+      API functionalities. Users are encouraged to review the authentication methods, endpoints, and 
+      response structures to effectively integrate with the platform.</p>
+    <p>For further inquiries or support, please contact our development team.</a>.</p>
 </body>
 </html>
