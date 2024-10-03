@@ -57,155 +57,116 @@
 
     <h2>API Endpoints</h2>
 
-    <!-- User Management -->
-    <h3>1. User Management</h3>
-    <h4>Register a User</h4>
-    <pre><code>POST /users/register</code></pre>
-    <p>Request Body:</p>
-    <pre><code>{
-  "username": "string",
-  "password": "string",
-  "email": "string",
-  "role": "string" // e.g., "coach", "player", "developer"
-}</code></pre>
-    <p>Response:</p>
-    <div class="response">
-        <p><strong>201 Created:</strong> User registered successfully.</p>
-        <p><strong>400 Bad Request:</strong> Validation error.</p>
-    </div>
+    <!-- Ballpark Management -->
+    <h3>1. Ballpark Management</h3>
 
-    <h4>Login</h4>
-    <pre><code>POST /users/login</code></pre>
-    <p>Request Body:</p>
+    <h4>Get Ballpark Details</h4>
+    <pre><code>GET /ballparks</code></pre>
+    <p>Query Parameters:</p>
     <pre><code>{
-  "username": "string",
-  "password": "string"
-}</code></pre>
-    <p>Response:</p>
-    <div class="response">
-        <p><strong>200 OK:</strong> Returns JWT token.</p>
-        <p><strong>401 Unauthorized:</strong> Invalid credentials.</p>
-    </div>
-
-    <h4>Get User Details</h4>
-    <pre><code>GET /users/me</code></pre>
-    <p>Response:</p>
-    <pre><code>{
-  "userId": "string",
-  "username": "string",
-  "role": "string",
-  "teams": ["string"]
+  "ballpark_name": "string",
+  "city": "string",
+  "state": "string"
 }</code></pre>
 
-    <!-- Team Management -->
-    <h3>2. Team Management</h3>
+    <!-- Game Management -->
+    <h3>2. Game Management</h3>
 
-    <h4>Retrieve All Teams</h4>
-    <pre><code>GET /teams</code></pre>
-    <p>Response:</p>
-    <pre><code>[
-  {
-    "teamId": "string",
-    "teamName": "string",
-    "members": ["userId1", "userId2"]
-  }
-]</code></pre>
-
-    <h4>Create Team</h4>
-    <pre><code>POST /teams</code></pre>
-    <p>Request Body:</p>
+    <h4>Get Game Details</h4>
+    <pre><code>GET /games</code></pre>
+    <p>Query Parameters:</p>
     <pre><code>{
-  "teamName": "string",
-  "members": ["userId1", "userId2"]
+  "ballpark_name": "string",
+  "date": "date",
+  "home_team_name": "string",
+  "visiting_team_name": "string"
 }</code></pre>
-    <p>Response:</p>
-    <div class="response">
-        <p><strong>201 Created:</strong> Team created successfully.</p>
-        <p><strong>403 Forbidden:</strong> User not authorized.</p>
-    </div>
-
-    <h4>Invite User to Team</h4>
-    <pre><code>POST /teams/{teamId}/invite</code></pre>
-    <p>Request Body:</p>
-    <pre><code>{
-  "userId": "string"
-}</code></pre>
-    <p>Response:</p>
-    <div class="response">
-        <p><strong>200 OK:</strong> User invited successfully.</p>
-        <p><strong>404 Not Found:</strong> Team not found.</p>
-    </div>
-
-    <h4>Remove User from Team</h4>
-    <pre><code>DELETE /teams/{teamId}/members/{userId}</code></pre>
-    <p>Response:</p>
-    <div class="response">
-        <p><strong>204 No Content:</strong> User removed successfully.</p>
-        <p><strong>403 Forbidden:</strong> User not authorized.</p>
-    </div>
 
     <!-- Pitch Management -->
     <h3>3. Pitch Management</h3>
 
     <h4>Get Pitch Data</h4>
-    <pre><code>GET /pitch/{pitchId}</code></pre>
-    <p>Response:</p>
+    <pre><code>GET /pitches</code></pre>
+    <p>Query Parameters:</p>
     <pre><code>{
-  "pitchId": "string",
-  "pitchType": "string",
-  "velocity": "number",
-  "spinRate": "number",
-  "pitcherId": "string",
-  "batterId": "string"
+  "auto_pitch_type": "string",
+  "balls": "int",
+  "batter_id": "int",
+  "catcher_id": "int",
+  "date": "date",
+  "date_range_end": "string",
+  "date_range_start": "string",
+  "game_id": "UUID",
+  "inning": "int",
+  "outs": "int"
 }</code></pre>
 
     <!-- Player Management -->
     <h3>4. Player Management</h3>
 
     <h4>Get Player Details</h4>
-    <pre><code>GET /players/{playerId}</code></pre>
-    <p>Response:</p>
+    <pre><code>GET /players</code></pre>
+    <p>Query Parameters:</p>
     <pre><code>{
-  "playerId": "string",
-  "name": "string",
-  "team": "string",
-  "position": "string",
-  "stats": {
-    "gamesPlayed": "number",
-    "average": "number",
-    "homeRuns": "number"
-  }
+  "player_batting_handedness": "string",
+  "player_name": "string",
+  "player_pitching_handedness": "string",
+  "player_position": "string",
+  "team_id": "UUID",
+  "team_name": "string"
 }</code></pre>
 
-    <!-- Ballpark Management -->
-    <h3>5. Ballpark Management</h3>
+    <!-- Team Management -->
+    <h3>5. Team Management</h3>
 
-    <h4>Get Ballpark Details</h4>
-    <pre><code>GET /ballparks/{ballparkId}</code></pre>
-    <p>Response:</p>
+    <h4>Retrieve All Teams</h4>
+    <pre><code>GET /teams</code></pre>
+    <p>Query Parameters:</p>
     <pre><code>{
-  "ballparkId": "string",
-  "name": "string",
-  "location": "string",
-  "dimensions": "string"
+  "home_ballpark_name": "string",
+  "league": "string",
+  "team_name": "string"
 }</code></pre>
 
-    <!-- Game Management -->
-    <h3>6. Game Management</h3>
+  <!-- User Management -->
+  <h3>6. User Management</h3>
+  <h4>Register a User</h4>
+  <pre><code>POST /users/register</code></pre>
+  <p>Request Body:</p>
+  <pre><code>{
+  "username": "string",
+  "password": "string",
+  "email": "string",
+  "role": "string" // e.g., "coach", "player", "developer"
+  }</code></pre>
+  <p>Response:</p>
+  <div class="response">
+      <p><strong>201 Created:</strong> User registered successfully.</p>
+      <p><strong>400 Bad Request:</strong> Validation error.</p>
+  </div>
 
-    <h4>Get Game Details</h4>
-    <pre><code>GET /games/{gameId}</code></pre>
-    <p>Response:</p>
-    <pre><code>{
-  "gameId": "string",
-  "date": "string",
-  "teams": ["team1", "team2"],
-  "score": {
-    "team1": "number",
-    "team2": "number"
-  },
-  "venue": "string"
-}</code></pre>
+  <h4>Login</h4>
+  <pre><code>POST /users/login</code></pre>
+  <p>Request Body:</p>
+  <pre><code>{
+  "username": "string",
+  "password": "string"
+  }</code></pre>
+  <p>Response:</p>
+  <div class="response">
+      <p><strong>200 OK:</strong> Returns JWT token.</p>
+      <p><strong>401 Unauthorized:</strong> Invalid credentials.</p>
+  </div>
+
+  <h4>Get User Details</h4>
+  <pre><code>GET /users/me</code></pre>
+  <p>Response:</p>
+  <pre><code>{
+  "userId": "string",
+  "username": "string",
+  "role": "string",
+  "teams": ["string"]
+  }</code></pre>
 
     <!-- Error Handling & Rate Limiting -->
     <h2>Error Handling</h2>
@@ -229,9 +190,7 @@
     </div>
 
     <h2>Conclusion</h2>
-    <p>This API documentation provides a comprehensive overview of the Atlantic League Analytics Platform's 
-      API functionalities. Users are encouraged to review the authentication methods, endpoints, and 
-      response structures to effectively integrate with the platform.</p>
+    <p>This API documentation provides a comprehensive overview of the Atlantic League Analytics Platform's API functionalities. Users are encouraged to review the authentication methods, endpoints, and response structures to effectively integrate with the platform.</p>
     <p>For further inquiries or support, please contact our development team.</a>.</p>
 </body>
 </html>
