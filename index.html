@@ -102,7 +102,7 @@
 }</code></pre>
 
     <!-- Player Management -->
-    <h3>4. Player Management</h3>
+    <h3>4. Player Management</h4>
 
     <h4>Get Player Details</h4>
     <pre><code>GET /players</code></pre>
@@ -128,45 +128,45 @@
   "team_name": "string"
 }</code></pre>
 
-  <!-- User Management -->
-  <h3>6. User Management</h3>
-  <h4>Register a User</h4>
-  <pre><code>POST /users/register</code></pre>
-  <p>Request Body:</p>
-  <pre><code>{
+    <!-- User Management -->
+    <h3>6. User Management</h3>
+    <h4>Register a User</h4>
+    <pre><code>POST /users/register</code></pre>
+    <p>Request Body:</p>
+    <pre><code>{
   "username": "string",
   "password": "string",
   "email": "string",
   "role": "string" // e.g., "coach", "player", "developer"
-  }</code></pre>
-  <p>Response:</p>
-  <div class="response">
-      <p><strong>201 Created:</strong> User registered successfully.</p>
-      <p><strong>400 Bad Request:</strong> Validation error.</p>
-  </div>
+}</code></pre>
+    <p>Response:</p>
+    <div class="response">
+        <p><strong>201 Created:</strong> User registered successfully.</p>
+        <p><strong>400 Bad Request:</strong> Validation error.</p>
+    </div>
 
-  <h4>Login</h4>
-  <pre><code>POST /users/login</code></pre>
-  <p>Request Body:</p>
-  <pre><code>{
+    <h4>Login</h4>
+    <pre><code>POST /users/login</code></pre>
+    <p>Request Body:</p>
+    <pre><code>{
   "username": "string",
   "password": "string"
-  }</code></pre>
-  <p>Response:</p>
-  <div class="response">
-      <p><strong>200 OK:</strong> Returns JWT token.</p>
-      <p><strong>401 Unauthorized:</strong> Invalid credentials.</p>
-  </div>
+}</code></pre>
+    <p>Response:</p>
+    <div class="response">
+        <p><strong>200 OK:</strong> Returns JWT token.</p>
+        <p><strong>401 Unauthorized:</strong> Invalid credentials.</p>
+    </div>
 
-  <h4>Get User Details</h4>
-  <pre><code>GET /users/me</code></pre>
-  <p>Response:</p>
-  <pre><code>{
+    <h4>Get User Details</h4>
+    <pre><code>GET /users/me</code></pre>
+    <p>Response:</p>
+    <pre><code>{
   "userId": "string",
   "username": "string",
   "role": "string",
   "teams": ["string"]
-  }</code></pre>
+}</code></pre>
 
     <!-- Error Handling & Rate Limiting -->
     <h2>Error Handling</h2>
@@ -191,6 +191,6 @@
 
     <h2>Conclusion</h2>
     <p>This API documentation provides a comprehensive overview of the Atlantic League Analytics Platform's API functionalities. Users are encouraged to review the authentication methods, endpoints, and response structures to effectively integrate with the platform.</p>
-    <p>For further inquiries or support, please contact our development team.</a>.</p>
+    <p>For further inquiries or support, please contact our development team.</p>
 </body>
 </html>
