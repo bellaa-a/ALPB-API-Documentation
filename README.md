@@ -6,14 +6,7 @@ The Atlantic League Analytics Platform provides a robust API to access Trackman 
 
 ## Base URL
 ```
-https://api.atlanticleagueanalytics.com/v1
-```
-
-## Authentication
-All API requests require authentication via AWS Cognito. Users must register and authenticate to receive a JSON Web Token (JWT), which should be included in the Authorization header of each request.
-
-```
-Authorization: Bearer <token>
+https://1ywv9dczq5.execute-api.us-east-2.amazonaws.com/ALPBAPI
 ```
 
 ## API Endpoints
@@ -67,7 +60,12 @@ GET /pitches
   "date_range_start": "string",
   "game_id": "UUID",
   "inning": "int",
-  "outs": "int"
+  "outs": "int",
+  "pitch_call": "string",
+  "pitcher_id": "int",
+  "play_result": "string",
+  "strikes": "int",
+  "top_or_bottom": "string"
 }
 ```
 
@@ -104,53 +102,6 @@ GET /teams
 }
 ```
 
-### 6. User Management
-
-#### Register a User
-```
-POST /users/register
-```
-**Request Body:**
-```json
-{
-  "username": "string",
-  "password": "string",
-  "email": "string",
-  "role": "string" 
-}
-```
-**Response:**
-- **201 Created:** User registered successfully.
-- **400 Bad Request:** Validation error.
-
-#### Login
-```
-POST /users/login
-```
-**Request Body:**
-```json
-{
-  "username": "string",
-  "password": "string"
-}
-```
-**Response:**
-- **200 OK:** Returns JWT token.
-- **401 Unauthorized:** Invalid credentials.
-
-#### Get User Details
-```
-GET /users/me
-```
-**Response:**
-```json
-{
-  "userId": "string",
-  "username": "string",
-  "role": "string",
-  "teams": ["string"]
-}
-```
 
 ## Error Handling
 Common error responses include:
